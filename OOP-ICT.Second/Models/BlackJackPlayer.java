@@ -1,40 +1,37 @@
 import java.util.ArrayList;
 
-public class BlackJackPlayer extends Player{
+public class BlackJackPlayer extends Player {
 
-    public BlackJackPlayer(String name, double betSum){
-        this.name=name;
-        this.betSum=betSum;
+
+    public BlackJackPlayer(String name) {
+        super(name);
     }
-    public String name;
-    public boolean status;
 
-    public double betSum;
 
-    public ArrayList<PlayingCard> playerCards = new ArrayList<>();
-    public void joinGame(BlackJackPlayingGround playingGround){
-        playingGround.addPlayer(this);
 
-    }
-    public void takeCard(PlayingGround playingGround){
-        if(this.canTakeCard()) {
-            this.playerCards.add(playingGround.dealer.deck.get(0));
-            playingGround.dealer.deck.remove(0);
+    public void takeCard(PlayingCard card) {
+        if (!(getPlayingCards() == null)){
+            if (!hasMoreThan(21)) {
+            ArrayList<PlayingCard> tempcards = new ArrayList<>(getPlayingCards());
+            tempcards.add(card);
+            this.setPlayingCards(tempcards);
+            }
+        else {
+            ArrayList<PlayingCard> tempcards = new ArrayList<>(getPlayingCards());
+                tempcards.add(card);
+                this.setPlayingCards(tempcards);
+            }
         }
-
     }
-    public boolean canTakeCard(){
-        boolean canTakeCard = true;
-        int points = 0;
-        for (PlayingCard card:this.playerCards){
-            points += card.numeric.value;
-        }
-        if (points >= 17){
-            canTakeCard = false;
-        }
-        return canTakeCard;
+    @Override
+    public void joinGame(PlayingGround playingGround) {
+        playingGround.players.add(this);
     }
 
+    @Override
+    public void allocateBet(float betSum) {
+        this.setBet(betSum);
+    }
 
 
 }

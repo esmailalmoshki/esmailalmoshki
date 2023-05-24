@@ -1,15 +1,21 @@
 public class UsualPlayer extends Player{
-
-    public UsualPlayer(String name, double betSum ){
-        this.name=name;
-        this.betSum =betSum;
-
+    public UsualPlayer(String name) {
+        super(name);
     }
-    public String name;
-    public double betSum;
 
-    public PlayingCard[] playerCards = new PlayingCard[4];
-    //in the blackjack game
+    @Override
+    public void takeCard(PlayingCard card) {
+        //TODO make regular take card implementation
+    }
 
+    @Override
+    public void joinGame(PlayingGround playingGround) {
+        playingGround.players.add(this);
+    }
+
+    @Override
+    public void allocateBet(float betSum) {
+        this.setBet(betSum);
+    }
 
 }
